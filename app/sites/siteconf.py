@@ -4,6 +4,7 @@ from functools import lru_cache
 
 from lxml import etree
 
+import log
 from app.helper import ChromeHelper
 from app.utils import ExceptionUtils, StringUtils, RequestUtils
 from app.utils.commons import singleton
@@ -132,6 +133,9 @@ class SiteConf:
                     ret_attr["2xfree"] = True
             # 检测FREE
             for xpath_str in xpath_strs.get("FREE"):
+                if torrent_url == 'https://www.torrentleech.org/torrent/241138363':
+                    log.info("html %s" % html)
+                    log.info("xpath_str %s" % xpath_str)
                 if html.xpath(xpath_str):
                     ret_attr["free"] = True
             # 检测HR
