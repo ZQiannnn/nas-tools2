@@ -112,6 +112,7 @@ class SiteConf:
             "hr": False,
             "peer_count": 0
         }
+        log.info("【Brush】123")
         if not torrent_url:
             log.info("【Brush】torrent_url %s" % torrent_url)
             return ret_attr
@@ -119,11 +120,13 @@ class SiteConf:
         if not xpath_strs:
             log.info("【Brush】xpath_strs %s" % xpath_strs)
             return ret_attr
+        log.info("【Brush】234")
         html_text = self.__get_site_page_html(url=torrent_url,
                                               cookie=cookie,
                                               ua=ua,
                                               render=xpath_strs.get('RENDER'),
                                               proxy=proxy)
+        log.info("【Brush】456")
         log.info("【Brush】html %s" % html_text)
         log.info("【Brush】xpath_str %s" % xpath_strs.get("FREE"))
         if not html_text:
