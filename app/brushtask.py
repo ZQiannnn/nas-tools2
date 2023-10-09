@@ -660,6 +660,11 @@ class BrushTask(object):
                            f"添加时间：{time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))}"
                 self.message.send_brushtask_added_message(title=msg_title, text=msg_text)
 
+        # 刷新种子大小
+        torrent_info = self.downloader.get_torrents(downloader_id=downloader_id, ids=[download_id])
+        if torrent_info:
+            size = torrent_info[0].size
+
         # 插入种子数据
         if self.dbhelper.insert_brushtask_torrent(brush_id=taskid,
                                                   title=title,

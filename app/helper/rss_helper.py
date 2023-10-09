@@ -67,6 +67,9 @@ class RssHelper:
                         if not enclosure and link:
                             enclosure = link
                             link = None
+                            # torrentleech 刷流兼容
+                            if enclosure.find("torrentleech") == -1:
+                                link = DomUtils.tag_value(item, "guid", default=None)
                         # 大小
                         size = DomUtils.tag_value(item, "enclosure", "length", default=0)
                         if size and str(size).isdigit():
