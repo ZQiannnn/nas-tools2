@@ -89,7 +89,6 @@ class RssHelper:
                                     'description': description,
                                     'link': link,
                                     'pubdate': pubdate}
-                        log.info("【Brush】刷流任务获取种子连接 %s" % link)
                         ret_array.append(tmp_dict)
                     except Exception as e1:
                         ExceptionUtils.exception_traceback(e1)

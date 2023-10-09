@@ -743,7 +743,6 @@ class BrushTask(object):
                                                             proxy=proxy)
             torrent_peer_count = torrent_attr.get("peer_count")
             log.info("【Brush】%s 解析详情, %s" % (title, torrent_attr))
-            return False
             if torrent_size == 0:
                 # RSS无法获取size的从网页获取size
                 torrent_size = torrent_attr.get("size")
