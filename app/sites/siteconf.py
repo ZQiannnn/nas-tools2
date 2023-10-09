@@ -122,6 +122,8 @@ class SiteConf:
                                               ua=ua,
                                               render=xpath_strs.get('RENDER'),
                                               proxy=proxy)
+        log.info("html %s" % html_text)
+        log.info("xpath_str %s" % xpath_strs.get("FREE"))
         if not html_text:
             return ret_attr
         try:
@@ -133,8 +135,6 @@ class SiteConf:
                     ret_attr["2xfree"] = True
             # 检测FREE
             for xpath_str in xpath_strs.get("FREE"):
-                log.info("html %s" % html)
-                log.info("xpath_str %s" % xpath_str)
                 if html.xpath(xpath_str):
                     ret_attr["free"] = True
             # 检测HR
