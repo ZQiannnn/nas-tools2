@@ -163,9 +163,9 @@ class SiteConf:
                             break
                     temp_size = int(peer_count_digit_str) if len(peer_count_digit_str) > 0 else 0
                     if peer_count_str.find("MB") != -1:
-                        temp_size = temp_size * 1024
-                    if peer_count_str.find("GB") != -1:
                         temp_size = temp_size * 1024 * 1024
+                    if peer_count_str.find("GB") != -1:
+                        temp_size = temp_size * 1024 * 1024 * 1024
                     ret_attr["size"] = temp_size
         except Exception as err:
             ExceptionUtils.exception_traceback(err)
