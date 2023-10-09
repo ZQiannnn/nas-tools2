@@ -4,7 +4,6 @@ from functools import lru_cache
 
 from lxml import etree
 
-import log
 from app.helper import ChromeHelper
 from app.utils import ExceptionUtils, StringUtils, RequestUtils
 from app.utils.commons import singleton
@@ -153,28 +152,22 @@ class SiteConf:
                             break
                     ret_attr["peer_count"] = int(peer_count_digit_str) if len(peer_count_digit_str) > 0 else 0
             for xpath_str in xpath_strs.get("SIZE"):
-                log.info("【Brush】xpath_str %s" % xpath_str)
                 peer_count_dom = html.xpath(xpath_str)
                 if peer_count_dom:
                     peer_count_str = ''.join(peer_count_dom[0].itertext())
                     peer_count_digit_str = ""
-                    peer_count_all_str = ""
-                    end = False
                     for m in peer_count_str:
-                        peer_count_all_str = peer_count_str + ""
-                        if m.isdigit() and not end:
+                        if m.isdigit():
                             peer_count_digit_str = peer_count_digit_str + m
-                        if m == " ":
-                            end = True
+                        if m == " " or m == ".":
+                            break
                     temp_size = int(peer_count_digit_str) if len(peer_count_digit_str) > 0 else 0
-                    if peer_count_all_str.find("MB") != -1:
+                    if peer_count_str.find("MB") != -1:
                         temp_size = temp_size * 1024
-                    if peer_count_all_str.find("GB") != -1:
+                    if peer_count_str.find("GB") != -1:
                         temp_size = temp_size * 1024 * 1024
                     ret_attr["size"] = temp_size
-                    log.info("【Brush】size %s" % temp_size)
         except Exception as err:
-            log.error("【Brush】err %s" % str(err))
             ExceptionUtils.exception_traceback(err)
         # 随机休眼后再返回
         time.sleep(round(random.uniform(1, 5), 1))
