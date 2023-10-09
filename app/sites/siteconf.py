@@ -134,9 +134,9 @@ class SiteConf:
             # 检测FREE
             for xpath_str in xpath_strs.get("FREE"):
                 if html.xpath(xpath_str):
-                    log.info("xpath_str %s" % xpath_str)
                     ret_attr["free"] = True
-                if torrent_url == 'https://www.torrentleech.org/torrent/241138363':
+                if torrent_url == 'https://www.torrentleech.org/torrent/241138364' or \
+                        torrent_url == 'https://www.torrentleech.org/torrent/241138363':
                     log.info("【Brush】html %s" % html)
                     log.info("【Brush】xpath_str %s" % xpath_str)
                     log.info("【Brush】free %s" % ret_attr["free"])
@@ -156,6 +156,28 @@ class SiteConf:
                         if m == " ":
                             break
                     ret_attr["peer_count"] = int(peer_count_digit_str) if len(peer_count_digit_str) > 0 else 0
+            for xpath_str in xpath_strs.get("SIZE"):
+                peer_count_dom = html.xpath(xpath_str)
+                if peer_count_dom:
+                    peer_count_str = ''.join(peer_count_dom[0].itertext())
+                    peer_count_digit_str = ""
+                    peer_count_no_digit_str = ""
+                    for m in peer_count_str:
+                        if m.isdigit():
+                            peer_count_digit_str = peer_count_digit_str + m
+                        elif m != " ":
+                            peer_count_no_digit_str = peer_count_no_digit_str + m
+                        if m == " ":
+                            break
+                    temp_size = int(peer_count_digit_str) if len(peer_count_digit_str) > 0 else 0
+                    if peer_count_no_digit_str == "MB":
+                        temp_size = temp_size * 1024
+                    if peer_count_no_digit_str == "GB":
+                        temp_size = temp_size * 1024 * 1024
+                    ret_attr["size"] = temp_size
+                    if torrent_url == 'https://www.torrentleech.org/torrent/241138364' or \
+                            torrent_url == 'https://www.torrentleech.org/torrent/241138363':
+                        log.info("【Brush】size %s" % temp_size)
         except Exception as err:
             ExceptionUtils.exception_traceback(err)
         # 随机休眼后再返回

@@ -744,6 +744,27 @@ class BrushTask(object):
             torrent_peer_count = torrent_attr.get("peer_count")
             log.debug("【Brush】%s 解析详情, %s" % (title, torrent_attr))
 
+            if torrent_size == 0:
+                # RSS无法获取size的从网页获取size
+                torrent_size = torrent_attr.get("size")
+                if rss_rule.get("size"):
+                    rule_sizes = rss_rule.get("size").split("#")
+                    if rule_sizes[0]:
+                        if len(rule_sizes) > 1 and rule_sizes[1]:
+                            min_max_size = rule_sizes[1].split(',')
+                            min_size = min_max_size[0]
+                            if len(min_max_size) > 1:
+                                max_size = min_max_size[1]
+                            else:
+                                max_size = 0
+                            if rule_sizes[0] == "gt" and float(torrent_size) < float(min_size) * 1024 ** 3:
+                                return False
+                            if rule_sizes[0] == "lt" and float(torrent_size) > float(min_size) * 1024 ** 3:
+                                return False
+                            if rule_sizes[0] == "bw" and not float(min_size) * 1024 ** 3 < float(torrent_size) < float(
+                                    max_size) * 1024 ** 3:
+                                return False
+
             # 检查免费状态
             if rss_rule.get("free") == "FREE":
                 if not torrent_attr.get("free"):
