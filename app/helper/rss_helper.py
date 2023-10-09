@@ -1,5 +1,6 @@
+import json
 import xml.dom.minidom
-
+import log
 from app.db import MainDb, DbPersist
 from app.db.models import RSSTORRENTS
 from app.utils import RssTitleUtils, StringUtils, RequestUtils, ExceptionUtils, DomUtils
@@ -88,6 +89,7 @@ class RssHelper:
                                     'description': description,
                                     'link': link,
                                     'pubdate': pubdate}
+                        log.info("【Brush】刷流任务获取种子对象 %s ！" % json.dumps(tmp_dict))
                         ret_array.append(tmp_dict)
                     except Exception as e1:
                         ExceptionUtils.exception_traceback(e1)
