@@ -742,22 +742,22 @@ class BrushTask(object):
                                                             ua=ua,
                                                             proxy=proxy)
             torrent_peer_count = torrent_attr.get("peer_count")
-            log.debug("【Brush】%s 解析详情, %s" % (title, torrent_attr))
+            log.info("【Brush】%s 解析详情, %s" % (title, torrent_attr))
 
             # 检查免费状态
             if rss_rule.get("free") == "FREE":
                 if not torrent_attr.get("free"):
-                    log.debug("【Brush】不是一个FREE资源，跳过")
+                    log.info("【Brush】不是一个FREE资源，跳过")
                     return False
             elif rss_rule.get("free") == "2XFREE":
                 if not torrent_attr.get("2xfree"):
-                    log.debug("【Brush】不是一个2XFREE资源，跳过")
+                    log.info("【Brush】不是一个2XFREE资源，跳过")
                     return False
 
             # 检查HR状态
             if rss_rule.get("hr"):
                 if torrent_attr.get("hr"):
-                    log.debug("【Brush】这是一个H&R资源，跳过")
+                    log.info("【Brush】这是一个H&R资源，跳过")
                     return False
 
             # 检查做种人数

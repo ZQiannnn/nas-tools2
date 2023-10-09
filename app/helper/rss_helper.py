@@ -47,7 +47,6 @@ class RssHelper:
                 dom_tree = xml.dom.minidom.parseString(ret_xml)
                 rootNode = dom_tree.documentElement
                 items = rootNode.getElementsByTagName("item")
-                log.info("【Brush】刷流任务获取种子数 %s ！" % len(items))
                 for item in items:
                     try:
                         # 标题
@@ -90,7 +89,7 @@ class RssHelper:
                                     'description': description,
                                     'link': link,
                                     'pubdate': pubdate}
-                        log.info("【Brush】刷流任务获取种子连接 %s ！" % link)
+                        log.info("【Brush】刷流任务获取种子连接 %s" % link)
                         ret_array.append(tmp_dict)
                     except Exception as e1:
                         ExceptionUtils.exception_traceback(e1)
