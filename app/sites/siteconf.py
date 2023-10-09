@@ -113,9 +113,11 @@ class SiteConf:
             "peer_count": 0
         }
         if not torrent_url:
+            log.info("【Brush】torrent_url %s" % torrent_url)
             return ret_attr
         xpath_strs = self.get_grap_conf(torrent_url)
         if not xpath_strs:
+            log.info("【Brush】xpath_strs %s" % xpath_strs)
             return ret_attr
         html_text = self.__get_site_page_html(url=torrent_url,
                                               cookie=cookie,
