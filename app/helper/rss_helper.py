@@ -47,6 +47,7 @@ class RssHelper:
                 dom_tree = xml.dom.minidom.parseString(ret_xml)
                 rootNode = dom_tree.documentElement
                 items = rootNode.getElementsByTagName("item")
+                log.info("【Brush】刷流任务获取种子数 %s ！" % len(items))
                 for item in items:
                     try:
                         # 标题
