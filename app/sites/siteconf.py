@@ -161,18 +161,18 @@ class SiteConf:
                 if peer_count_dom:
                     peer_count_str = ''.join(peer_count_dom[0].itertext())
                     peer_count_digit_str = ""
-                    peer_count_no_digit_str = ""
+                    peer_count_str = ""
+                    end = False
                     for m in peer_count_str:
-                        if m.isdigit():
+                        peer_count_str = peer_count_str + ""
+                        if m.isdigit() and not end:
                             peer_count_digit_str = peer_count_digit_str + m
-                        elif m != " ":
-                            peer_count_no_digit_str = peer_count_no_digit_str + m
                         if m == " ":
-                            break
+                            end = True
                     temp_size = int(peer_count_digit_str) if len(peer_count_digit_str) > 0 else 0
-                    if peer_count_no_digit_str == "MB":
+                    if peer_count_str.find("MB") != -1:
                         temp_size = temp_size * 1024
-                    if peer_count_no_digit_str == "GB":
+                    if peer_count_str.find("GB") != -1:
                         temp_size = temp_size * 1024 * 1024
                     ret_attr["size"] = temp_size
                     if torrent_url == 'https://www.torrentleech.org/torrent/241138364' or \
