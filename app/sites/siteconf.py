@@ -122,8 +122,8 @@ class SiteConf:
                                               ua=ua,
                                               render=xpath_strs.get('RENDER'),
                                               proxy=proxy)
-        log.info("html %s" % html_text)
-        log.info("xpath_str %s" % xpath_strs.get("FREE"))
+        log.info("【Brush】html %s" % html_text)
+        log.info("【Brush】xpath_str %s" % xpath_strs.get("FREE"))
         if not html_text:
             return ret_attr
         try:
