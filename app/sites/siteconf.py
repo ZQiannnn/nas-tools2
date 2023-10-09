@@ -135,11 +135,6 @@ class SiteConf:
             for xpath_str in xpath_strs.get("FREE"):
                 if html.xpath(xpath_str):
                     ret_attr["free"] = True
-                if torrent_url == 'https://www.torrentleech.org/torrent/241138364' or \
-                        torrent_url == 'https://www.torrentleech.org/torrent/241138363':
-                    log.info("【Brush】html %s" % html)
-                    log.info("【Brush】xpath_str %s" % xpath_str)
-                    log.info("【Brush】free %s" % ret_attr["free"])
             # 检测HR
             for xpath_str in xpath_strs.get("HR"):
                 if html.xpath(xpath_str):
@@ -175,9 +170,7 @@ class SiteConf:
                     if peer_count_str.find("GB") != -1:
                         temp_size = temp_size * 1024 * 1024
                     ret_attr["size"] = temp_size
-                    if torrent_url == 'https://www.torrentleech.org/torrent/241138364' or \
-                            torrent_url == 'https://www.torrentleech.org/torrent/241138363':
-                        log.info("【Brush】size %s" % temp_size)
+                    log.info("【Brush】size %s" % temp_size)
         except Exception as err:
             ExceptionUtils.exception_traceback(err)
         # 随机休眼后再返回
