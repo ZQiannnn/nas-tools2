@@ -112,23 +112,16 @@ class SiteConf:
             "hr": False,
             "peer_count": 0
         }
-        log.info("【Brush】123")
         if not torrent_url:
-            log.info("【Brush】torrent_url %s" % torrent_url)
             return ret_attr
         xpath_strs = self.get_grap_conf(torrent_url)
         if not xpath_strs:
-            log.info("【Brush】xpath_strs %s" % xpath_strs)
             return ret_attr
-        log.info("【Brush】234")
         html_text = self.__get_site_page_html(url=torrent_url,
                                               cookie=cookie,
                                               ua=ua,
                                               render=xpath_strs.get('RENDER'),
                                               proxy=proxy)
-        log.info("【Brush】456")
-        log.info("【Brush】html %s" % html_text)
-        log.info("【Brush】xpath_str %s" % xpath_strs.get("FREE"))
         if not html_text:
             return ret_attr
         try:
@@ -140,6 +133,9 @@ class SiteConf:
                     ret_attr["2xfree"] = True
             # 检测FREE
             for xpath_str in xpath_strs.get("FREE"):
+                if torrent_url == 'https://www.torrentleech.org/torrent/241138363':
+                    log.info("html %s" % html)
+                    log.info("xpath_str %s" % xpath_str)
                 if html.xpath(xpath_str):
                     ret_attr["free"] = True
             # 检测HR
