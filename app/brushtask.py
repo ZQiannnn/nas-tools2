@@ -240,18 +240,19 @@ class BrushTask(object):
                 else:
                     log.debug("【Brush】%s 已处理过" % torrent_name)
                     continue
-
                 # 检查种子是否符合选种规则
+                size_ary = [size]
                 if not self.__check_rss_rule(rss_rule=rss_rule,
                                              title=torrent_name,
                                              torrent_url=page_url,
-                                             torrent_size=size,
+                                             size_ary=size_ary,
                                              pubdate=pubdate,
                                              siteid=site_id,
                                              cookie=cookie,
                                              ua=ua,
                                              proxy=site_proxy):
                     continue
+                size = size_ary[0]
                 # 检查能否添加当前种子，判断是否超过保种体积大小
                 if not self.__is_allow_new_torrent(taskinfo=taskinfo,
                                                    dlcount=max_dlcount,
@@ -684,7 +685,7 @@ class BrushTask(object):
                          rss_rule,
                          title,
                          torrent_url,
-                         torrent_size,
+                         size_ary,
                          pubdate,
                          siteid,
                          cookie,
@@ -695,13 +696,15 @@ class BrushTask(object):
         :param rss_rule: 过滤条件字典
         :param title: 种子名称
         :param torrent_url: 种子页面地址
-        :param torrent_size: 种子大小
+        :param size_ary: 种子大小
         :param pubdate: 发布时间
         :param siteid: 站点ID
         :param cookie: Cookie
         :param ua: User-Agent
         :return: 是否命中
         """
+
+        torrent_size = size_ary[0]
         if not rss_rule:
             return True
         # 检查种子大小
@@ -747,6 +750,7 @@ class BrushTask(object):
             if torrent_size == 0:
                 # RSS无法获取size的从网页获取size
                 torrent_size = torrent_attr.get("size")
+                size_ary[0] = torrent_size
                 if rss_rule.get("size"):
                     rule_sizes = rss_rule.get("size").split("#")
                     if rule_sizes[0]:
