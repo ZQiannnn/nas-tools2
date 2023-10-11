@@ -352,6 +352,7 @@ class BrushTask(object):
                         set([(torrent.get("hash")
                               if downloader_type == 'qbittorrent'
                               else str(torrent.hashString)) for torrent in torrents])))
+                log.info("【Brush】任务 %s 获取remove_torrent_ids" % remove_torrent_ids)
                 # 完成的种子
                 for torrent in torrents:
                     torrent_info = self.__get_torrent_dict(downloader_type=downloader_type,
